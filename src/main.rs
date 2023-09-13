@@ -3,9 +3,10 @@ use std::io::{self};
 use std::time::Instant;
 
 fn main() -> io::Result<()> {
-    let now = Instant::now();
+    // here you can put how many numbers you want to check
     const LIMIT: u32 = 100_000;
 
+    let now = Instant::now();
     let primes = simple_parralel(LIMIT);
     let elapsed = now.elapsed();
 
