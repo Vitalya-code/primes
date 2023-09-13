@@ -24,7 +24,7 @@ fn simple_parralel(limit: u32) -> Vec<u32> {
     // vectors with capacity are faster than dynamic
     let mut numbers: Vec<u32> = Vec::with_capacity(limit as usize);
 
-    for num in 1..=limit {
+    for num in 2..=limit {
         numbers.push(num)
     }
 
