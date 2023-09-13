@@ -1,29 +1,12 @@
+use rayon::prelude::*;
 use std::io::{self};
 use std::time::Instant;
-
-fn sieve_of_eratosthenes(limit: u32) -> Vec<u32> {
-    let mut is_prime = vec![true; (limit + 1) as usize];
-    is_prime[0] = false;
-    is_prime[1] = false;
-
-    for num in 2..=limit {
-        if is_prime[num as usize] {
-            for multiple in (num * 2..=limit).step_by(num as usize) {
-                is_prime[multiple as usize] = false;
-            }
-        }
-    }
-
-    let prime_numbers: Vec<u32> = (2..=limit).filter(|&num| is_prime[num as usize]).collect();
-
-    prime_numbers
-}
 
 fn main() -> io::Result<()> {
     let now = Instant::now();
     const LIMIT: u32 = 100_000;
 
-    let primes = sieve_of_eratosthenes(LIMIT);
+    let primes = simple_parralel(LIMIT);
     let elapsed = now.elapsed();
 
     println!("{:?}", primes);
@@ -32,4 +15,44 @@ fn main() -> io::Result<()> {
     println!("          Elapsed time: {:?}", elapsed);
 
     Ok(())
+}
+
+fn simple_parralel(limit: u32) -> Vec<u32> {
+    // vectors with capacity are faster than dynamic
+    let mut numbers: Vec<u32> = Vec::with_capacity(limit as usize);
+
+    for num in 1..=limit {
+        numbers.push(num)
+    }
+
+    // we are cloning the numbers array with deleting non prime numbers
+    let prime_numbers: Vec<u32> = numbers
+        .par_iter()
+        .cloned()
+        .filter(|&num| is_prime(num))
+        .collect();
+
+    prime_numbers
+}
+
+fn is_prime(num: u32) -> bool {
+    if num <= 1 {
+        return false;
+    }
+    if num == 2 {
+        return true;
+    }
+    if num % 2 == 0 {
+        return false;
+    }
+
+    let mut divisor = 3;
+    while divisor * divisor <= num {
+        if num % divisor == 0 {
+            return false;
+        }
+        divisor += 2;
+    }
+
+    true
 }
