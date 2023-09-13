@@ -21,7 +21,7 @@ fn sieve_of_eratosthenes(limit: u32) -> Vec<u32> {
 
 fn main() -> io::Result<()> {
     let now = Instant::now();
-    const LIMIT: u32 = 15_485_863;
+    const LIMIT: u32 = 100_000;
 
     let primes = sieve_of_eratosthenes(LIMIT);
     let elapsed = now.elapsed();
