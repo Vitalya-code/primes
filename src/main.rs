@@ -3,7 +3,7 @@ use std::io::{self};
 use std::time::Instant;
 
 fn main() -> io::Result<()> {
-    // here you can put how many numbers you want to check
+    // here you can set how many numbers you want to check
     const LIMIT: u32 = 100_000;
 
     let now = Instant::now();
