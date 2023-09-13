@@ -6,8 +6,10 @@ fn main() -> io::Result<()> {
     // here you can set how many numbers you want to check
     const LIMIT: u32 = 100_000;
 
+    // start the timer
     let now = Instant::now();
     let primes = simple_parralel(LIMIT);
+    // we are only measuring speed of the algorithm
     let elapsed = now.elapsed();
 
     println!("{:?}", primes);
@@ -36,6 +38,7 @@ fn simple_parralel(limit: u32) -> Vec<u32> {
     prime_numbers
 }
 
+// this function checks if a number is prime
 fn is_prime(num: u32) -> bool {
     if num <= 1 {
         return false;
