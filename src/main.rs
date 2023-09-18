@@ -24,17 +24,20 @@ fn simple_parralel(limit: u32) -> Vec<u32> {
     // vectors with capacity are faster than dynamic
     let mut numbers: Vec<u32> = Vec::with_capacity(limit as usize);
 
+    // fill our vector with numbers from 2 to the limit
     for num in 2..=limit {
         numbers.push(num)
     }
 
-    // we are cloning the numbers array with deleting non prime numbers
+    // we are cloning the numbers array two "prime_numbers" with deleting non prime numbers
+    // in parallel
     let prime_numbers: Vec<u32> = numbers
         .par_iter()
         .cloned()
         .filter(|&num| is_prime(num))
         .collect();
 
+    // return prime_numbers;
     prime_numbers
 }
 
